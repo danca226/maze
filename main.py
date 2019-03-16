@@ -80,12 +80,14 @@ class MazeUI:
         sys.setrecursionlimit(ROWS*COLS)
 
         def async():
+            self.draw_maze()
             solution = Solution(self.maze, ROWS-1, COLS-1)
             self.solve_dfs(0, 0, solution)
         t = Thread(target=async).start()
 
     def btn_bfs(self):
         def async():
+            self.draw_maze()
             solution = Solution(self.maze, ROWS-1, COLS-1)
             self.solve_bfs(0, 0, solution)
         t = Thread(target=async).start()
