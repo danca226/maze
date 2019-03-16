@@ -1,3 +1,4 @@
+# python 3.6
 from tkinter import *
 from enum import Enum
 from random import choice
@@ -187,3 +188,4 @@ class MazeUI:
 
 if __name__ == '__main__':
     MazeUI()
+
