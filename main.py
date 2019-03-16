@@ -8,9 +8,9 @@ import sys
 from collections import deque
 
 # maze configuration
-ROWS = 40
-COLS = 60
-SIZE = 10
+ROWS = 80
+COLS = 100
+SIZE = 8
 MARGIN = SIZE / 2
 CANVAS_WIDTH = COLS*SIZE + SIZE
 CANVAS_HEIGHT = ROWS*SIZE + SIZE
@@ -139,7 +139,7 @@ class MazeUI:
 
         # clear processed nodes for next iteration
         solution.processed.clear()
-        sleep(0.001)
+        sleep(0.00005)
 
     def solve_dfs(self, r, c, solution):
         solution.visit(r, c)
