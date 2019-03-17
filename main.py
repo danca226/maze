@@ -8,8 +8,8 @@ import sys
 from collections import deque
 
 # maze configuration
-ROWS = 80
-COLS = 100
+ROWS = 100
+COLS = 150
 SIZE = 8
 MARGIN = SIZE / 2
 CANVAS_WIDTH = COLS*SIZE + SIZE
@@ -62,9 +62,11 @@ class MazeUI:
         Button(fm, text="generate", command=self.btn_generate).pack(side=LEFT)
         Button(fm, text="dfs", command=self.btn_dfs).pack(side=LEFT)
         Button(fm, text="bfs", command=self.btn_bfs).pack(side=LEFT)
+        Button(fm, text="bi-dir bfs", command=self.btn_bidir_bfs).pack(side=LEFT)
         fm.pack(fill=BOTH, expand=YES)
 
-        self.canvas = Canvas(self.window, width=CANVAS_WIDTH, height=CANVAS_HEIGHT, background="white", bd=0, highlightthickness=0, relief='ridge')
+        self.canvas = Canvas(self.window, width=CANVAS_WIDTH, height=CANVAS_HEIGHT,
+                             background="white", bd=0, highlightthickness=0, relief='ridge')
         self.canvas.pack()
 
         self.btn_generate()
@@ -72,25 +74,29 @@ class MazeUI:
         self.window.mainloop()
 
     def btn_generate(self):
-        self.maze = [[{'visited': False, 'adj': []} for r in range(COLS)] for c in range(ROWS)]
+        self.maze = [[{'visited': False, 'adj': []}
+                      for r in range(COLS)] for c in range(ROWS)]
         self.create_maze(0, 0)
         self.draw_maze()
 
     def btn_dfs(self):
         sys.setrecursionlimit(ROWS*COLS)
-
+        self.draw_maze()
         def async():
-            self.draw_maze()
             solution = Solution(self.maze, ROWS-1, COLS-1)
             self.solve_dfs(0, 0, solution)
-        t = Thread(target=async).start()
+        Thread(target=async).start()
+
+    def btn_bidir_bfs(self):
+        # TODO: bi-directional bfs
+        pass
 
     def btn_bfs(self):
+        self.draw_maze()
         def async():
-            self.draw_maze()
             solution = Solution(self.maze, ROWS-1, COLS-1)
             self.solve_bfs(0, 0, solution)
-        t = Thread(target=async).start()
+        Thread(target=async).start()
 
     def create_maze(self, r, c):
         self.maze[r][c]['visited'] = True
@@ -141,7 +147,7 @@ class MazeUI:
 
         # clear processed nodes for next iteration
         solution.processed.clear()
-        sleep(0.00005)
+        sleep(0.000005)
 
     def solve_dfs(self, r, c, solution):
         solution.visit(r, c)
@@ -190,4 +196,3 @@ class MazeUI:
 
 if __name__ == '__main__':
     MazeUI()
-
