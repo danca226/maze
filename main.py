@@ -82,10 +82,10 @@ class MazeUI:
     def btn_dfs(self):
         sys.setrecursionlimit(ROWS*COLS)
         self.draw_maze()
-        def async():
+        def thread():
             solution = Solution(self.maze, ROWS-1, COLS-1)
             self.solve_dfs(0, 0, solution)
-        Thread(target=async).start()
+        Thread(target=thread).start()
 
     def btn_bidir_bfs(self):
         # TODO: bi-directional bfs
@@ -93,10 +93,10 @@ class MazeUI:
 
     def btn_bfs(self):
         self.draw_maze()
-        def async():
+        def thread():
             solution = Solution(self.maze, ROWS-1, COLS-1)
             self.solve_bfs(0, 0, solution)
-        Thread(target=async).start()
+        Thread(target=thread).start()
 
     def create_maze(self, r, c):
         self.maze[r][c]['visited'] = True
